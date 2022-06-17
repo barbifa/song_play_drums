@@ -2,7 +2,13 @@
 
 (() => {
     console.log('music player script file');
+    let thekeys = document.querySelectorAll(".key");
 
+
+    function removeHighlight(event){
+        this.classList.remove('playing');
+
+    }
 
 
     function logKeyboardKeyCode(event){
@@ -14,9 +20,14 @@
         
         
         let targetAudio = document.querySelector(`audio[data-key="${event.keyCode}"]`);
-        if(targetAudio){
+        let targetCircleDiv = document.querySelector(`div[data-key="${event.keyCode}"]`);
+
+
+        if(targetAudio && targetCircleDiv){
+            targetCircleDiv.classList.add('playing');
             targetAudio.currentTime = 0;
             targetAudio.play();
+            
         }else{
             return;
         }
@@ -30,5 +41,7 @@
     //add some event handling for keyboard events
 
     window.addEventListener('keyup', logKeyboardKeyCode);
+
+    thekeys.forEach(key => key.addEventListener('transitionend',removeHighlight));
 
 })();
